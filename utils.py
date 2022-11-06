@@ -3,6 +3,14 @@ import time
 import numpy as np
 
 import torch
+import tempfile
+
+def get_size_in_megabytes(model):
+    # https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html#look-at-model-size
+    with tempfile.TemporaryFile() as f:
+        torch.save(model.state_dict(), f)
+        size = f.tell() / 2**20
+    return size
 
 
 class Timer:
